@@ -1,11 +1,11 @@
-import './MultiCheck.css';
-
-import React from 'react';
+import React from "react";
+import { fpMap } from "../utils";
+import "./MultiCheck.css";
 
 export type Option = {
-  label: string,
-  value: string
-}
+  label: string;
+  value: string;
+};
 
 /**
  * Notice:
@@ -20,17 +20,26 @@ export type Option = {
  *                             they should be passed to outside
  */
 type Props = {
-  label?: string,
-  options: Option[],
-  columns?: number,
-  values?: string[]
-  onChange?: (options: Option[]) => void,
-}
+  label?: string;
+  options: Option[];
+  columns?: number;
+  values?: string[];
+  onChange?: (options: Option[]) => void;
+};
 
-const MultiCheck: React.FunctionComponent<Props> = (props): JSX.Element => {
-  return <div className='MultiCheck'>
-    {/* TODO */}
-  </div>
-}
+/* function fpMap  (func:any) :any => (arr: []):[] => {
+ *     return arr;
+ * }
+ *  */
+
+const MultiCheck: React.FunctionComponent<Props> = (
+  props: Props,
+): JSX.Element => {
+  return (
+    <div className="MultiCheck">
+      {fpMap((o) => <input type="checked" value={o.value} />)(props.options)}
+    </div>
+  );
+};
 
 export default MultiCheck;
