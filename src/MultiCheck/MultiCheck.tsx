@@ -27,17 +27,30 @@ type Props = {
   onChange?: (options: Option[]) => void;
 };
 
-/* function fpMap  (func:any) :any => (arr: []):[] => {
- *     return arr;
- * }
- *  */
-
-const MultiCheck: React.FunctionComponent<Props> = (
-  props: Props,
-): JSX.Element => {
+const MultiCheck: React.FunctionComponent<Props> = (props): JSX.Element => {
   return (
-    <div className="MultiCheck">
-      {fpMap((o) => <input type="checked" value={o.value} />)(props.options)}
+    <div className="multi-check-container">
+      <div className="multi-check">
+        <div className="multi-check-label">
+          <label>{props.label}</label>
+        </div>
+        <div
+          className="multi-check-items"
+          style={{
+            gridTemplateRows: `repeat(${Math.ceil(
+              props.options.length / (props.columns || 1)
+            )},auto)`
+          }}
+        >
+          {fpMap(o => (
+            <label className="multi-check-item">
+              <input type="checkbox" value={o.value} />
+              <span></span>
+              <div>{o.label}</div>
+            </label>
+          ))(props.options)}
+        </div>
+      </div>
     </div>
   );
 };

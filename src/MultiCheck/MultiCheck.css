@@ -1,3 +1,77 @@
-/* TODO */
-.MultiCheck {
+.multi-check-container {
+    display: flex;
+}
+
+.multi-check {
+    background-color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+}
+
+.multi-check-label {
+    background-color: #bdc3c7;
+    padding: 8px;
+}
+
+.multi-check-items {
+    background-color: #fff;
+    padding: 4px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    margin: 8px;
+    display: grid;
+    grid-template-rows: repeat(5,auto);
+    grid-auto-flow: column;
+    grid-gap: 8px;
+}
+
+.multi-check-item {
+    display: flex;
+    align-items: center;
+}
+
+/* hide input box */
+.multi-check-item > input[type="checkbox"] {
+    visibility: hidden;
+    position: relative;
+    width: 0;
+    height: 0;
+}
+
+.multi-check-item > span {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    position: relative;
+    border-radius: 2px;
+    border: 2px solid #bdc3c7;
+    margin-right: 8px;
+}
+
+.multi-check-item > span:before {
+    border-radius: 2px;
+    position: absolute;
+    content: '';
+    width: 17px;
+    height: 17px;
+    top: -2px;
+    left: -2px;
+    color: white;
+}
+
+
+.multi-check-item > input[type="checkbox"]:checked + span:before {
+    content: '\2713';
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.multi-check-item > div {
+    max-width: 120px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    user-select: none;
 }
