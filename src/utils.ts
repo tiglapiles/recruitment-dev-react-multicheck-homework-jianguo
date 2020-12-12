@@ -18,6 +18,6 @@ export function fpMap(func: fn): fn {
 // functional programming pipe
 export function pipe(...fns: fn[]): fn {
   return function(x: any) {
-    fns.reduce((v: any, f: fn) => f(v), x);
+    return fns.reduce((v: any, f: fn) => f(v), x);
   };
 }
