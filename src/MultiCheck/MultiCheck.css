@@ -34,7 +34,6 @@
 /* hide input box */
 .multi-check-item > input[type="checkbox"] {
     visibility: hidden;
-    position: relative;
     width: 0;
     height: 0;
 }
@@ -70,7 +69,7 @@
 }
 
 .multi-check-item > div {
-    max-width: 120px;
+    max-width: 162px;
     overflow-wrap: break-word;
     word-wrap: break-word;
     user-select: none;

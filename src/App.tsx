@@ -1,41 +1,60 @@
-import React, {useState} from 'react';
-import MultiCheck, {Option} from './MultiCheck/MultiCheck';
+import React, { useState, useEffect } from "react";
+import MultiCheck, { Option } from "./MultiCheck/MultiCheck";
 
 const options: Option[] = [
-  {label: 'aaa', value: '111',},
-  {label: 'bbb', value: '222',},
-  {label: 'ccc', value: '333',},
-  {label: 'ddd', value: '444',},
-  {label: 'eee', value: '555',},
-  {label: 'fff', value: '666',},
-  {label: 'ggg', value: '777',},
-  {label: 'hhh', value: '888',},
-  {label: 'iii', value: '999',},
-]
-
-const defaultValues: string[] = [
-  '333',
-  '555'
-]
+  { label: "New (NEW)", value: "New (NEW)", checked: false },
+  { label: "Active (ACT)", value: "Active (ACT)", checked: false },
+  { label: "Price Change (PCG)", value: "Price Change (PCG)", checked: false },
+  {
+    label: "Back on Market (BOM)",
+    value: "Back on Market (BOM)",
+    checked: false
+  },
+  { label: "Extended (EXT)", value: "Extended (EXT)", checked: false },
+  { label: "Reactivated (RAC)", value: "Reactivated (RAC)", checked: false },
+  { label: "Contingent (CTG)", value: "Contingent (CTG)", checked: false },
+  { label: "Under Agreement", value: "Under Agreement", checked: false },
+  { label: "Sold (SLD)", value: "Sold (SLD)", checked: true },
+  {
+    label: "Temporarily Withdrawn (WDN)",
+    value: "Temporarily Withdrawn (WDN)",
+    checked: false
+  },
+  { label: "Expired (EXP)", value: "Expired (EXP)", checked: false },
+  { label: "Cancele (CAN)", value: "Cancele (CAN)", checked: true },
+  {
+    label: "Comming Soon (CSO)",
+    value: "Comming Soon (CSO)",
+    checked: false
+  }
+];
 
 const App: React.FunctionComponent = (): JSX.Element => {
-  const [selectedValues, setSelectedValues] = useState<string[]>(defaultValues);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   function onSelectedOptionsChange(options: Option[]): void {
-    setSelectedValues(options.map(it => it.value))
+    setSelectedValues(options.filter(o => o.checked).map(o => o.value));
   }
 
-  return <div>
-    <h1>Multi Check Component</h1>
-    <MultiCheck label='my-multi-check' options={options}
-                onChange={onSelectedOptionsChange}
-                values={selectedValues}
-                columns={2}/>
+  useEffect(() => {
+    setSelectedValues(options.filter(o => o.checked).map(o => o.value));
+  }, []);
+
+  return (
     <div>
-      <h2>Current selected values:</h2>
-      <div>{selectedValues.join(',')}</div>
+      <h1>Multi Check Component</h1>
+      <MultiCheck
+        label="Status"
+        options={options}
+        onChange={onSelectedOptionsChange}
+        columns={2}
+      />
+      <div>
+        <h2>Current selected values:</h2>
+        <div>{selectedValues.join(",")}</div>
+      </div>
     </div>
-  </div>
-}
+  );
+};
 
 export default App;
