@@ -27,27 +27,49 @@ type Props = {
   onChange?: (options: Option[]) => void;
 };
 
-const selectAll = { label: "Select All", value: "Select All", checked: false };
+const selectAll = (c = false) => ({
+  label: "Select All",
+  value: "Select All",
+  checked: c
+});
 
-const MultiCheck: FunctionComponent<Props> = (props: Props): JSX.Element => {
+const MultiCheck: FunctionComponent<Props> = (props): JSX.Element => {
   const { label = "", columns = 1, onChange = () => {} } = props;
   const [value, setValue] = useState({}); // for call props.onChange
   const [options, setOptions] = useState<Option[]>([
-    selectAll,
+    /* if original options all checked */
+    selectAll(!hasUnchecked(props.options)),
     ...props.options
   ]);
 
-  const removeSelectAll = (o: Option[]) =>
-    o.filter(i => i.value !== selectAll.value);
+  function hasUnchecked(o: Option[]) {
+    return o.filter(o => o.value !== selectAll().value).some(o => !o.checked);
+  }
 
   function _handleClick(o: Option): void {
-    setOptions(prev =>
-      fpMap(i => {
-        if (i.value === o.value) {
-          return { ...i, checked: !i.checked };
+    const convertCheck = fpMap(i => {
+      if (i.value === o.value) {
+        return { ...i, checked: !o.checked };
+      }
+      return i;
+    });
+    const convertSelectAll = fpMap(i => {
+      if (selectAll().value === o.value) {
+        return { ...i, checked: !o.checked };
+      }
+      return i;
+    });
+    const isAllChecked = (o: Option[]) => {
+      return fpMap(i => {
+        if (i.value === selectAll().value) {
+          return { ...i, checked: !hasUnchecked(o) };
         }
         return i;
-      })(prev)
+      })(o);
+    };
+
+    setOptions(prev =>
+      pipe(convertCheck, convertSelectAll, isAllChecked)(prev)
     );
     setValue(o);
   }
@@ -57,7 +79,8 @@ const MultiCheck: FunctionComponent<Props> = (props: Props): JSX.Element => {
   }
 
   useEffect(() => {
-    onChange(pipe(removeSelectAll)(options));
+    /* selectAll option can not be pass outside */
+    onChange(options.filter(i => i.value !== selectAll().value));
   }, [value]);
 
   return (
