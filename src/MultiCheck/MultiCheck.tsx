@@ -15,7 +15,6 @@ export type Option = {
  *
  * @param {string} label - the label text of this component
  * @param {Option[]} options - options
- * @param {string[]} values - default checked option values
  * @param {number} columns - default value is 1
  * @param {Function} onChange - when checked options are changed,
  *                             they should be passed to outside
@@ -47,18 +46,21 @@ const MultiCheck: FunctionComponent<Props> = (props): JSX.Element => {
   }
 
   function _handleClick(o: Option): void {
+    /* user toggle click checkbox */
     const convertCheck = fpMap(i => {
       if (i.value === o.value) {
         return { ...i, checked: !o.checked };
       }
       return i;
     });
+    /* user toggle click SelectAll option */
     const convertSelectAll = fpMap(i => {
       if (selectAll().value === o.value) {
         return { ...i, checked: !o.checked };
       }
       return i;
     });
+    /* if all other option checked than SelectAll option checked else unchecked */
     const isAllChecked = (o: Option[]) => {
       return fpMap(i => {
         if (i.value === selectAll().value) {

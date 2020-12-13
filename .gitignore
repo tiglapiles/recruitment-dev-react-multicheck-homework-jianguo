@@ -2,3 +2,5 @@ node_modules/
 public/bundle.js
 dist/
 package-lock.json
+false
+__snapshots__/

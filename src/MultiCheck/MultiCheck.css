@@ -21,6 +21,7 @@
     border-radius: 4px;
     margin: 8px;
     display: grid;
+    /* column direction is from top to bottom */
     grid-template-rows: repeat(5,auto);
     grid-auto-flow: column;
     grid-gap: 8px;
