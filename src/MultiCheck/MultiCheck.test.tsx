@@ -21,7 +21,7 @@ describe("MultiCheck", () => {
       expect(screen.queryByLabelText(label)).toBeDefined();
     });
 
-    it("render and click checkbox", async () => {
+    it("render and click checkbox", () => {
       const options = [{ label: "test", value: "test", checked: false }];
       render(<MultiCheck options={options} />);
 

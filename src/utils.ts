@@ -2,10 +2,10 @@ type fn = (arg: any) => any;
 
 // functional programming for map iterator
 export function fpMap(func: fn): fn {
-  return function(arr: []): any[] {
+  return function(arr: unknown[]): unknown[] {
     let length: number = arr.length || 0;
     let i: number = 0;
-    let result: any[] = [];
+    let result: unknown[] = [];
 
     while (i < length) {
       result.push(func(arr[i]));
